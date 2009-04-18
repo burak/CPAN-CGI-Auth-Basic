@@ -2,7 +2,7 @@ package CGI::Auth::Basic;
 use strict;
 use vars qw[$VERSION $AUTOLOAD $RE %ERROR $FATAL_HEADER $CAN_CRYPT];
 
-$VERSION = '1.11';
+$VERSION = '1.20';
 
 CHECK_CRYPT: {
    eval "crypt('aa','aa')"; # The crypt() function is unimplemented due to excessive paranoia
@@ -856,7 +856,7 @@ Burak Gürsoy, E<lt>burakE<64>cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2004-2008 Burak Gürsoy. All rights reserved.
+Copyright 2004-2009 Burak Gürsoy. All rights reserved.
 
 =head1 LICENSE
 
