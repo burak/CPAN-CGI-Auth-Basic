@@ -4,14 +4,9 @@ eg/02_turkish.pl
 eg/03_standard.pl
 eg/04_simple.pl
 eg/password.txt
-t/1-use.t
-t/2-pod.t
-t/3-pod-coverage.t
-tools/Build.pm
+t/001-use.t
 Changes
-Makefile.PL
 Build.PL
 MANIFEST
 MANIFEST.SKIP
 README
-META.yml
