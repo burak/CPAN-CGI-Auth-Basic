@@ -2,6 +2,9 @@ Revision history for Perl extension CGI::Auth::Basic.
 
 Time zone is GMT+2
 
+1.30 Wed Sep 30 03:09:11 2009
+   => Perl::Critic refactoring.
+
 1.21 Wed Apr 22 04:30:21 2009
    => Update builder.
 

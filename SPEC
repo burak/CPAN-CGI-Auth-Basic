@@ -1,5 +1,8 @@
 {
-    module_name    => 'CGI::Auth::Basic',
+    module_name => 'CGI::Auth::Basic',
+    requires    => {
+        ( $] < 5.006 ? ( 'warnings::compat' => 0 ) : ()),
+    },
     meta_merge => {
         resources => {
             repository => 'http://bitbucket.org/burak/cpan-cgi-auth-basic/',
