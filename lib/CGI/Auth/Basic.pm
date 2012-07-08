@@ -10,7 +10,7 @@ use constant CRYP_CHARS => q{.}, q{,}, q{/}, 0..9, q{A}..q{Z}, q{a}..q{z};
 use constant RANDOM_NUM => 64;
 use Carp qw( croak );
 
-$VERSION = '1.30';
+$VERSION = '1.31';
 
 CHECK_CRYPT: {
    # The crypt() function is unimplemented due to excessive paranoia
