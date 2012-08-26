@@ -1,34 +1,21 @@
 package CGI::Auth::Basic;
 use strict;
 use warnings;
-use vars qw( $VERSION $RE %ERROR $FATAL_HEADER $CAN_CRYPT );
-use constant EMPTY_STRING => q{};
-use constant CHMOD_VALUE  => 0777;
+use constant EMPTY_STRING        => q{};
+use constant CHMOD_VALUE         => 0777;
 use constant MIN_PASSWORD_LENGTH =>  3;
 use constant MAX_PASSWORD_LENGTH => 32;
-use constant CRYP_CHARS => q{.}, q{,}, q{/}, 0..9, q{A}..q{Z}, q{a}..q{z};
-use constant RANDOM_NUM => 64;
+use constant CRYP_CHARS          => q{.}, q{,}, q{/}, 0..9, q{A}..q{Z}, q{a}..q{z};
+use constant RANDOM_NUM          => 64;
 use Carp qw( croak );
 
-$VERSION = '1.31';
+our $VERSION = '1.22';
 
-CHECK_CRYPT: {
-   # The crypt() function is unimplemented due to excessive paranoia
-   my $eok = eval 'crypt("aa","aa"); 1';
-   $CAN_CRYPT = ( $@ || ! $eok ) ? 0 : 1;
-   if ( ! $CAN_CRYPT ) {
-      $eok = eval { require Crypt::UnixCrypt; 1; };
-      if ( $@ || ! $eok ) {
-         croak 'Your perl version does not implement crypt(). '
-              .'Upgrade perl or Install Crypt::UnixCrypt';
-      }
-   }
-}
-
-$RE = qr{\A\w\./}xms; # regex for passwords
+our $RE = qr{\A\w\./}xms; # regex for passwords
+our $FATAL_HEADER;
 
 # Fatal and other error messages
-%ERROR = (
+our %ERROR = (
    INVALID_OPTION    => 'Options must be in "param => value" format!',
    CGI_OBJECT        => 'I need a CGI object to run!!!',
    FILE_READ         => 'Error opening pasword file: ',
@@ -93,13 +80,6 @@ sub _set_options {
    $self->{use_flock}      = $o{use_flock}      || 1;
    $self->{hidden}         = $o{hidden}         || [];
    return;
-}
-
-sub _crypt {
-   my $plain = shift;
-   my $salt  = shift;
-   return $CAN_CRYPT ? crypt($plain, $salt)
-                     : Crypt::UnixCrypt::crypt($plain, $salt);
 }
 
 sub exit_code {
@@ -579,9 +559,7 @@ MAIN_TEMPLATE
 
 sub fatal_header {
    my($self, @args) = @_;
-   if (@args) {
-      $FATAL_HEADER = shift @args;
-   }
+   $FATAL_HEADER = shift @args if @args;
    return $FATAL_HEADER || qq~Content-Type: text/html; charset=ISO-8859-1\n\n~;
 }
 
@@ -625,14 +603,14 @@ FATAL
 sub _match_pass  {
    my $self = shift;
    my $form = shift;
-   return _crypt($form, substr $self->{password}, 0, 2 ) eq $self->{password};
+   return crypt($form, substr $self->{password}, 0, 2 ) eq $self->{password};
 }
 
 sub _encode   {
    my $self  = shift;
    my $plain = shift;
    my $salt  = join EMPTY_STRING, (CRYP_CHARS)[ rand RANDOM_NUM, rand RANDOM_NUM ];
-   return _crypt $plain, $salt;
+   return crypt $plain, $salt;
 }
 
 sub _empty_cookie {
@@ -652,6 +630,10 @@ sub _exit_program {
 1;
 
 __END__
+
+=pod
+
+=encoding utf8
 
 =head1 NAME
 
@@ -971,17 +953,6 @@ If you want to change the error messages, do this before calling C<new()>.
 
 See the 'eg' directory in the distribution. Download the distro from 
 CPAN, if you don't have it.
-
-=head1 CAVEATS
-
-If you are using perl 5.5.3 and older on Win32 platform (this issue
-may not be limited with Win32 but I'm not sure), you may need to 
-install L<Crypt::UnixCrypt>. The C<CORE::crypt()> function is not 
-implemented on this version.
-
-=head1 BUGS
-
-Contact the author if you find any.
 
 =head1 SEE ALSO
 
