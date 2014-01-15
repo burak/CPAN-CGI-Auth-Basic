@@ -3,7 +3,7 @@
     requires    => {},
     meta_merge => {
         resources => {
-            repository => 'http://bitbucket.org/burak/cpan-cgi-auth-basic/',
+            repository => 'http://github.com/burak/cpan-cgi-auth-basic/',
         },
     },
     BUILDER => {
