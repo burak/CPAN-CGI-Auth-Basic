@@ -1,5 +1,8 @@
 Revision history for Perl extension CGI::Auth::Basic.
 
+1.23 Wed Jan 21 00:46:28 2015
+   => Fix for RT#100882.
+
 1.22 Mon Aug 27 01:22:53 2012
    => Perl::Critic refactoring.
    => Distro fixes.

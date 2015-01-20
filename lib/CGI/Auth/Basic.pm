@@ -9,7 +9,7 @@ use constant CRYP_CHARS          => q{.}, q{,}, q{/}, 0..9, q{A}..q{Z}, q{a}..q{
 use constant RANDOM_NUM          => 64;
 use Carp qw( croak );
 
-our $VERSION = '1.22';
+our $VERSION = '1.23';
 
 our $RE = qr{\A\w\./}xms; # regex for passwords
 our $FATAL_HEADER;
@@ -138,9 +138,6 @@ sub _init {
       page_logoff_link 
       page_content 
       page_title
-      _TEMPLATE_TITLE
-      _TEMPLATE_TITLE_USER
-      _TEMPLATE_NAMES
    );
 
    return;
