@@ -1,14 +1,15 @@
 #!/usr/bin/perl -w
 use strict;
 use warnings;
+use utf8;
 use CGI;
 
 my $tr_auth = TRAuth->new( CGI->new );
 # $auth->set_template(delete_all => 1);
 $tr_auth->check_user;
 $tr_auth->screen(
-   content => 'Bu programı kullanabilirsiniz',
-   title   => 'Erişim onaylandı',
+   content => 'Bu programÄ± kullanabilirsiniz',
+   title   => 'EriÅŸim onaylandÄ±',
 );
 
 # Translate the interface to turkish
@@ -46,12 +47,12 @@ sub template {
  <tr><td class="darktable">
   <table border="0" cellpadding="4" cellspacing="1">
  <tr>
-   <td class="titletable" colspan="3">Bu özelliği kullanabilmek için bağlanmalısınız</td>
+   <td class="titletable" colspan="3">Bu Ã¶zelliÄŸi kullanabilmek iÃ§in baÄŸlanmalÄ±sÄ±nÄ±z</td>
  </tr>
  <tr>
-  <td class="lighttable">Bu programı kullanmak için <i>gereken</i> parolayı girin:</td>
+  <td class="lighttable">Bu programÄ± kullanmak iÃ§in <i>gereken</i> parolayÄ± girin:</td>
   <td class="lighttable"><input type="password" name="<?COOKIE_ID?>"></td>
-  <td class="lighttable" align="right"><input type="submit" name="submit" value="Bağlan"></td>
+  <td class="lighttable" align="right"><input type="submit" name="submit" value="BaÄŸlan"></td>
  </tr>
 </table>
 </td> </tr>
@@ -68,13 +69,13 @@ change_pass_form => <<"TEMPLATE",
   <table border="0" cellpadding="4" cellspacing="1">
  <tr>
    <td class="titletable" colspan="3">
-   3 ile 32 karakter arasında bir parola girin. Boşluk kullanmayın!</td>
+   3 ile 32 karakter arasÄ±nda bir parola girin. BoÅŸluk kullanmayÄ±n!</td>
  </tr>
  <tr>
-  <td class="lighttable">Yeni parolanızı girin:</td>
+  <td class="lighttable">Yeni parolanÄ±zÄ± girin:</td>
   <td class="lighttable"><input type="password" name="<?COOKIE_ID?>_new"></td>
   <td class="lighttable" align="right">
-  <input type="submit" name="submit" value="Parolayı değiştir">
+  <input type="submit" name="submit" value="ParolayÄ± deÄŸiÅŸtir">
   <input type="hidden" name="change_password" value="ok"></td>
   <input type="hidden" name="<?CHANGEP_PARAM?>" value="1"></td>
 
@@ -90,7 +91,7 @@ screen => <<"TEMPLATE",
 <html>
    <head>
     <?PAGE_REFRESH?>
-    <title>CGI::Auth::Basic - Türkçe >> <?PAGE_TITLE?></title>
+    <title>CGI::Auth::Basic - TÃ¼rkÃ§e >> <?PAGE_TITLE?></title>
     <style>
       body       {font-family: Verdana, sans; font-size: 10pt}
       td         {font-family: Verdana, sans; font-size: 10pt}
@@ -109,35 +110,35 @@ screen => <<"TEMPLATE",
    </html>~,
 
    logoff_link => qq~
-   <span class="small">[<a href="<?PROGRAM?>?<?LOGOFF_PARAM?>=1">Çık</a>
-   - <a href="<?PROGRAM?>?<?CHANGEP_PARAM?>=1">Parolayı değiştir</a>]</span> ~,
+   <span class="small">[<a href="<?PROGRAM?>?<?LOGOFF_PARAM?>=1">Ã‡Ä±k</a>
+   - <a href="<?PROGRAM?>?<?CHANGEP_PARAM?>=1">ParolayÄ± deÄŸiÅŸtir</a>]</span> ~,
 
 TEMPLATE
 }
 
 sub title {
-return login_form       => 'Bağlan',
-   cookie_error     => 'Geçersiz kurabiye',
-   login_success    => 'Bağlantı başarılı',
-   logged_off       => 'Çıkış yaptınız',
-   change_pass_form => 'Parolayı değiştir',
-   password_created => 'Parola oluşturuldu',
-   password_changed => 'Parola başarıyla değiştirildi',
+return login_form       => 'BaÄŸlan',
+   cookie_error     => 'GeÃ§ersiz kurabiye',
+   login_success    => 'BaÄŸlantÄ± baÅŸarÄ±lÄ±',
+   logged_off       => 'Ã‡Ä±kÄ±ÅŸ yaptÄ±nÄ±z',
+   change_pass_form => 'ParolayÄ± deÄŸiÅŸtir',
+   password_created => 'Parola oluÅŸturuldu',
+   password_changed => 'Parola baÅŸarÄ±yla deÄŸiÅŸtirildi',
    error            => 'Hata',
    ;
 }
 
 sub error {
-return INVALID_OPTION    => q{Seçenekler 'parametre => değer' biçiminde olmalı!},
-   CGI_OBJECT        => q{Çalışmak için bir CGI nesnesine ihtiyacım var!!!},
-   FILE_READ         => 'Parola dosyası açılamıyor: ',
-   NO_PASSWORD       => 'Herhangi bir parola belirtilmedi (veya parola dosyası bulunamıyor)!',
-   UPDATE_PFILE      => 'Parola dosyanız boş ve geçerli ayarlarınız bu kodun dosyayı güncellemesine izin vermiyor! Lütfen parola dosyanızı güncelleyin.',
-   ILLEGAL_PASSWORD  => 'Geçersiz parola! Kabul edilmedi. Geri dönün ve yeni bir tane girin',
-   FILE_WRITE        => 'Parola dosyası güncelleme için açılamıyor: ',
-   UNKNOWN_METHOD    => q{'<b>%s</b>' adında bir metod yok. Kodunuzu denetleyin.},
-   EMPTY_FORM_PFIELD => 'Herhangi bir parola ayarlamadınız (parola dosyası boş)!',
-   WRONG_PASSWORD    => '<p>Yanlış Parola!</p>',
-   INVALID_COOKIE    => 'Kurabiyeniz geçersiz bilgi içeriyor ve bu kurabiye program tarafından silindi.',
+return INVALID_OPTION    => q{SeÃ§enekler 'parametre => deÄŸer' biÃ§iminde olmalÄ±!},
+   CGI_OBJECT        => q{Ã‡alÄ±ÅŸmak iÃ§in bir CGI nesnesine ihtiyacÄ±m var!!!},
+   FILE_READ         => 'Parola dosyasÄ± aÃ§Ä±lamÄ±yor: ',
+   NO_PASSWORD       => 'Herhangi bir parola belirtilmedi (veya parola dosyasÄ± bulunamÄ±yor)!',
+   UPDATE_PFILE      => 'Parola dosyanÄ±z boÅŸ ve geÃ§erli ayarlarÄ±nÄ±z bu kodun dosyayÄ± gÃ¼ncellemesine izin vermiyor! LÃ¼tfen parola dosyanÄ±zÄ± gÃ¼ncelleyin.',
+   ILLEGAL_PASSWORD  => 'GeÃ§ersiz parola! Kabul edilmedi. Geri dÃ¶nÃ¼n ve yeni bir tane girin',
+   FILE_WRITE        => 'Parola dosyasÄ± gÃ¼ncelleme iÃ§in aÃ§Ä±lamÄ±yor: ',
+   UNKNOWN_METHOD    => q{'<b>%s</b>' adÄ±nda bir metod yok. Kodunuzu denetleyin.},
+   EMPTY_FORM_PFIELD => 'Herhangi bir parola ayarlamadÄ±nÄ±z (parola dosyasÄ± boÅŸ)!',
+   WRONG_PASSWORD    => '<p>YanlÄ±ÅŸ Parola!</p>',
+   INVALID_COOKIE    => 'Kurabiyeniz geÃ§ersiz bilgi iÃ§eriyor ve bu kurabiye program tarafÄ±ndan silindi.',
    ;
 }
