@@ -6,7 +6,7 @@ use CGI;
 my $my_auth = MyAuth->new( CGI->new );
 # $auth->set_template(delete_all => 1);
 $my_auth->check_user;
-$my_auth->screen(
+$my_auth->_screen(
    content => 'You can use this program',
    title   => 'Access Granted',
 );
