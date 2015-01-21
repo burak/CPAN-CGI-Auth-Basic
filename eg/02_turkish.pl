@@ -4,10 +4,14 @@ use warnings;
 use utf8;
 use CGI;
 
+if ( $] >= 5.008 ) {
+   eval q{ binmode STDOUT, ":utf8"; 1; } or die "Unable to change IO layer: $@";
+}
+
 my $tr_auth = TRAuth->new( CGI->new );
 # $auth->set_template(delete_all => 1);
 $tr_auth->check_user;
-$tr_auth->screen(
+$tr_auth->_screen(
    content => 'Bu programı kullanabilirsiniz',
    title   => 'Erişim onaylandı',
 );
@@ -19,12 +23,12 @@ use CGI::Auth::Basic;
 sub new {
    my $class = shift;
    my $cgi   = shift;
-   CGI::Auth::Basic->fatal_header("Content-Type: text/html; charset=ISO-8859-9\n\n");
+   CGI::Auth::Basic->fatal_header("Content-Type: text/html; charset=utf8\n\n");
    %CGI::Auth::Basic::ERROR = error();
    my $auth = CGI::Auth::Basic->new(
                cgi_object     => $cgi,
                file           => './password.txt',
-               http_charset   => 'ISO-8859-9',
+               http_charset   => 'utf8',
                setup_pfile    => 1,
                logoff_param   => 'cik',
                changep_param  => 'parola_degistir',
@@ -107,13 +111,13 @@ screen => <<"TEMPLATE",
       <?PAGE_CONTENT?>
       <?PAGE_INLINE_REFRESH?>
    </body>
-   </html>~,
+   </html>
+TEMPLATE
 
    logoff_link => qq~
    <span class="small">[<a href="<?PROGRAM?>?<?LOGOFF_PARAM?>=1">Çık</a>
    - <a href="<?PROGRAM?>?<?CHANGEP_PARAM?>=1">Parolayı değiştir</a>]</span> ~,
 
-TEMPLATE
 }
 
 sub title {
