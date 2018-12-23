@@ -1,6 +1,8 @@
 Revision history for Perl extension CGI::Auth::Basic.
 
 {{$NEXT}}
+
+1.24 2018-12-23 BURAK
     - Migrate to dzil.
 
 1.23 Wed Jan 21 00:46:28 2015
