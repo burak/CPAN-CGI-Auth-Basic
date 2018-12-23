@@ -1,4 +1,5 @@
 package CGI::Auth::Basic;
+
 use strict;
 use warnings;
 use constant EMPTY_STRING        => q{};
@@ -8,8 +9,6 @@ use constant MAX_PASSWORD_LENGTH => 32;
 use constant CRYP_CHARS          => q{.}, q{,}, q{/}, 0..9, q{A}..q{Z}, q{a}..q{z};
 use constant RANDOM_NUM          => 64;
 use Carp qw( croak );
-
-our $VERSION = '1.23';
 
 our $RE = qr{\A\w\./}xms; # regex for passwords
 our $FATAL_HEADER;
