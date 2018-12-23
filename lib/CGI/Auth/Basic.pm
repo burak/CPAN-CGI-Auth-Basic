@@ -568,6 +568,7 @@ sub _fatal {
       $rep[1]    =~ s{.*[\\/]}{}xms;
       $caller[1] =~ s{.*[\\/]}{}xms;
    my $class     = ref $self;
+   my $version   = $self->VERSION;
    my $fatal     = $self->fatal_header;
       $fatal    .= <<"FATAL";
 <html>
@@ -580,7 +581,7 @@ sub _fatal {
       </style>
    </head>
    <body>
-      <h1>$class $VERSION - Fatal Error</h1>
+      <h1>$class $version - Fatal Error</h1>
       <span class="error">$error</span> 
       <br>
       <br>
